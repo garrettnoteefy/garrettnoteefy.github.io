@@ -1,29 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Noteefy Widget Test</title>
-  <script>
-    (async () => {
-      try {
-        const r = await fetch("https://noteefypublic.blob.core.windows.net/widget/scripts/manifest.dev.json", { cache: "no-cache" });
-        const { url, integrity } = await r.json();
-        const s = document.createElement("script");
-        s.src = url;
-        s.integrity = integrity;
-        s.crossOrigin = "anonymous";
-        s.async = true;
-        s.onerror = (e) => console.warn("Noteefy widget failed to load", e);
-        document.head.appendChild(s);
-      } catch (e) {
-        console.warn("Noteefy manifest fetch failed", e);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noteefy Widget Test</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 20px;
+        line-height: 1.5;
       }
-    })();
-  </script>
-</head>
-<body>
-  <h1>Noteefy Widget Test Page</h1>
-  <p>The widget should load on this page.</p>
-</body>
+      nav a {
+        display: inline-block;
+        margin-right: 12px;
+        margin-bottom: 8px;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        text-decoration: none;
+        color: #125446;
+      }
+      code {
+        background: #f4f4f4;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 0.9em;
+      }
+    </style>
+    <script>
+      (async () => {
+        try {
+          const r = await fetch(
+            "https://noteefypublic.blob.core.windows.net/widget/scripts/manifest.dev.json",
+            { cache: "no-cache" },
+          );
+          const { url, integrity } = await r.json();
+          const s = document.createElement("script");
+          s.src = url;
+          s.integrity = integrity;
+          s.crossOrigin = "anonymous";
+          s.async = true;
+          s.onerror = (e) => console.warn("Noteefy widget failed to load", e);
+          document.head.appendChild(s);
+        } catch (e) {
+          console.warn("Noteefy manifest fetch failed", e);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <h1>Noteefy Widget Test Site</h1>
+    <p>
+      Mirrors the McConnell Golf URL pattern:
+      <code>default.html?pageid=...</code>. Each course page below carries a
+      different <code>pageid</code> so the widget config row whose
+      <code>render_on_query_parameters</code> matches that value is the one that
+      renders.
+    </p>
+    <nav>
+      <a href="default.html?pageid=1001">Course 1 (pageid=1001)</a>
+      <a href="default.html?pageid=1002">Course 2 (pageid=1002)</a>
+      <a href="default.html?pageid=1003">Course 3 (pageid=1003)</a>
+    </nav>
+  </body>
 </html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noteefy Widget Test — Course Page</title>
+  <script>
+    (async () => {
+      try {
+        const r = await fetch("https://noteefypublic.blob.core.windows.net/widget/scripts/manifest.dev.json", { cache: "no-cache" });
+        const { url, integrity } = await r.json();
+        const s = document.createElement("script");
+        s.src = url;
+        s.integrity = integrity;
+        s.crossOrigin = "anonymous";
+        s.async = true;
+        s.onerror = (e) => console.warn("Noteefy widget failed to load", e);
+        document.head.appendChild(s);
+      } catch (e) {
+        console.warn("Noteefy manifest fetch failed", e);
+      }
+    })();
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 720px; margin: 40px auto; padding: 0 20px; line-height: 1.5; }
+    h1 { margin-bottom: 8px; }
+    .meta { color: #666; }
+    code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+    a { color: #4285ba; }
+  </style>
+</head>
+<body>
+  <h1>Course Page</h1>
+  <p class="meta">Current pageid: <code id="pageid">unknown</code></p>
+  <p>This page mimics a McConnell location landing page. The widget that loads here should match the row whose <code>render_on_query_parameters</code> entry equals the <code>pageid</code> in this URL.</p>
+  <p><a href="index.html">← Back to course list</a></p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById("pageid").textContent = params.get("pageid") || "(none)";
+  </script>
+</body>
+</html>
