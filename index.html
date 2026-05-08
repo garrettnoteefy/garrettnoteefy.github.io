@@ -5,28 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Noteefy Widget Test</title>
     <style>
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        max-width: 720px;
-        margin: 40px auto;
-        padding: 0 20px;
-        line-height: 1.5;
+      :root {
+        --brand: #125446;
+        --brand-hover: #0d3d34;
+        --text: #1a1a1a;
+        --muted: #5c6770;
+        --bg: #f7f8f7;
+        --card: #ffffff;
+        --border: #e3e6e3;
       }
-      nav a {
-        display: inline-block;
-        margin-right: 12px;
-        margin-bottom: 8px;
-        padding: 8px 12px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        text-decoration: none;
-        color: #125446;
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 56px 24px;
+        line-height: 1.55;
+        color: var(--text);
+        background: var(--bg);
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 2rem;
+        letter-spacing: -0.01em;
+      }
+      .lede {
+        color: var(--muted);
+        margin: 0 0 32px;
+        font-size: 1.05rem;
       }
       code {
-        background: #f4f4f4;
+        background: #eef0ee;
         padding: 2px 6px;
-        border-radius: 3px;
+        border-radius: 4px;
         font-size: 0.9em;
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+      .card h2 {
+        margin: 0 0 4px;
+        font-size: 1.1rem;
+      }
+      .card p.hint {
+        margin: 0 0 20px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .button-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+      }
+      .btn {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 14px 16px;
+        background: var(--brand);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          background 0.15s ease,
+          transform 0.05s ease;
+        font-family: inherit;
+      }
+      .btn:hover {
+        background: var(--brand-hover);
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn .meta {
+        font-size: 0.78rem;
+        opacity: 0.8;
+        font-weight: 400;
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
       }
     </style>
     <script>
@@ -52,17 +120,30 @@
   </head>
   <body>
     <h1>Noteefy Widget Test Site</h1>
-    <p>
-      Mirrors the McConnell Golf URL pattern:
-      <code>default.html?pageid=...</code>. Each course page below carries a
-      different <code>pageid</code> so the widget config row whose
-      <code>render_on_query_parameters</code> matches that value is the one that
-      renders.
+    <p class="lede">
+      Mirrors the McConnell Golf URL pattern
+      (<code>default.html?pageid=…</code>). Each course page carries a different
+      <code>pageid</code> so the matching <code>render_on_query_parameters</code>
+      row gets selected server-side.
     </p>
-    <nav>
-      <a href="default.html?pageid=1001">Course 1 (pageid=1001)</a>
-      <a href="default.html?pageid=1002">Course 2 (pageid=1002)</a>
-      <a href="default.html?pageid=1003">Course 3 (pageid=1003)</a>
-    </nav>
+
+    <div class="card">
+      <h2>Pick a course</h2>
+      <p class="hint">Each button loads the same page with a different query param.</p>
+      <div class="button-grid">
+        <a class="btn" href="default.html?pageid=1001">
+          Course 1
+          <span class="meta">pageid=1001</span>
+        </a>
+        <a class="btn" href="default.html?pageid=1002">
+          Course 2
+          <span class="meta">pageid=1002</span>
+        </a>
+        <a class="btn" href="default.html?pageid=1003">
+          Course 3
+          <span class="meta">pageid=1003</span>
+        </a>
+      </div>
+    </div>
   </body>
 </html>

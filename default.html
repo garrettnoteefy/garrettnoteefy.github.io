@@ -1,43 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Noteefy Widget Test — Course Page</title>
-  <script>
-    (async () => {
-      try {
-        const r = await fetch("https://noteefypublic.blob.core.windows.net/widget/scripts/manifest.dev.json", { cache: "no-cache" });
-        const { url, integrity } = await r.json();
-        const s = document.createElement("script");
-        s.src = url;
-        s.integrity = integrity;
-        s.crossOrigin = "anonymous";
-        s.async = true;
-        s.onerror = (e) => console.warn("Noteefy widget failed to load", e);
-        document.head.appendChild(s);
-      } catch (e) {
-        console.warn("Noteefy manifest fetch failed", e);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noteefy Widget Test — Course Page</title>
+    <script>
+      (async () => {
+        try {
+          const r = await fetch(
+            "https://noteefypublic.blob.core.windows.net/widget/scripts/manifest.dev.json",
+            { cache: "no-cache" },
+          );
+          const { url, integrity } = await r.json();
+          const s = document.createElement("script");
+          s.src = url;
+          s.integrity = integrity;
+          s.crossOrigin = "anonymous";
+          s.async = true;
+          s.onerror = (e) => console.warn("Noteefy widget failed to load", e);
+          document.head.appendChild(s);
+        } catch (e) {
+          console.warn("Noteefy manifest fetch failed", e);
+        }
+      })();
+    </script>
+    <style>
+      :root {
+        --brand: #125446;
+        --brand-hover: #0d3d34;
+        --text: #1a1a1a;
+        --muted: #5c6770;
+        --bg: #f7f8f7;
+        --card: #ffffff;
+        --border: #e3e6e3;
       }
-    })();
-  </script>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 720px; margin: 40px auto; padding: 0 20px; line-height: 1.5; }
-    h1 { margin-bottom: 8px; }
-    .meta { color: #666; }
-    code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
-    a { color: #4285ba; }
-  </style>
-</head>
-<body>
-  <h1>Course Page</h1>
-  <p class="meta">Current pageid: <code id="pageid">unknown</code></p>
-  <p>This page mimics a McConnell location landing page. The widget that loads here should match the row whose <code>render_on_query_parameters</code> entry equals the <code>pageid</code> in this URL.</p>
-  <p><a href="index.html">← Back to course list</a></p>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 56px 24px;
+        line-height: 1.55;
+        color: var(--text);
+        background: var(--bg);
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 2rem;
+        letter-spacing: -0.01em;
+      }
+      .meta {
+        color: var(--muted);
+        margin: 0 0 32px;
+      }
+      code {
+        background: #eef0ee;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.15s ease;
+        font-family: inherit;
+        border: 1px solid var(--border);
+      }
+      .btn-primary {
+        background: var(--brand);
+        color: #fff;
+        border-color: var(--brand);
+      }
+      .btn-primary:hover {
+        background: var(--brand-hover);
+        border-color: var(--brand-hover);
+      }
+      .btn-secondary {
+        background: var(--card);
+        color: var(--brand);
+      }
+      .btn-secondary:hover {
+        background: #eef0ee;
+      }
+      .btn[aria-current="page"] {
+        background: var(--brand);
+        color: #fff;
+        border-color: var(--brand);
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Course Page</h1>
+    <p class="meta">Current pageid: <code id="pageid">unknown</code></p>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    document.getElementById("pageid").textContent = params.get("pageid") || "(none)";
-  </script>
-</body>
+    <div class="card">
+      <p>
+        Mimics a McConnell location landing page. The widget that loads here
+        should match the row whose <code>render_on_query_parameters</code> entry
+        equals the <code>pageid</code> in this URL.
+      </p>
+      <div class="nav-buttons" id="nav">
+        <a class="btn btn-primary" href="default.html?pageid=1001" data-pageid="1001">Course 1</a>
+        <a class="btn btn-primary" href="default.html?pageid=1002" data-pageid="1002">Course 2</a>
+        <a class="btn btn-primary" href="default.html?pageid=1003" data-pageid="1003">Course 3</a>
+        <a class="btn btn-secondary" href="index.html">← Home</a>
+      </div>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const currentPageId = params.get("pageid");
+      document.getElementById("pageid").textContent = currentPageId || "(none)";
+      if (currentPageId) {
+        const active = document.querySelector(
+          `#nav a[data-pageid="${currentPageId}"]`,
+        );
+        if (active) active.setAttribute("aria-current", "page");
+      }
+    </script>
+  </body>
 </html>
